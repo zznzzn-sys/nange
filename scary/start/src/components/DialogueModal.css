@@ -1,0 +1,150 @@
+.dialogue-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.dialogue-modal {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 2px solid #8b0000;
+  border-radius: 15px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
+}
+
+.dialogue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #8b0000;
+  padding-bottom: 0.5rem;
+}
+
+.speaker-name {
+  color: #8b0000;
+  font-size: 1.5rem;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #8b0000;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close-button:hover {
+  background: rgba(139, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+.dialogue-content {
+  margin-bottom: 1.5rem;
+}
+
+.dialogue-text {
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
+}
+
+.dialogue-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.choice-button {
+  background: linear-gradient(45deg, #8b0000, #dc143c);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.choice-button:hover {
+  background: linear-gradient(45deg, #dc143c, #ff0000);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+}
+
+.dialogue-actions {
+  text-align: center;
+}
+
+.continue-button {
+  background: linear-gradient(45deg, #006400, #008000);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.continue-button:hover {
+  background: linear-gradient(45deg, #008000, #00a000);
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .dialogue-modal {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .speaker-name {
+    font-size: 1.3rem;
+  }
+  
+  .dialogue-text {
+    font-size: 1rem;
+  }
+}

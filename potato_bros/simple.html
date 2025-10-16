@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>土豆兄弟 - 简化版</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        #game-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #gameCanvas {
+            border: 2px solid #ff9800;
+            background-color: #000000;
+        }
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .loading-text {
+            font-size: 24px;
+            color: #ff9800;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+    
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-text">加载游戏中...</div>
+    </div>
+    
+    <script>
+        // 简化版游戏代码
+        document.addEventListener('DOMContentLoaded', () => {
+            // 获取画布和上下文
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 游戏状态
+            let gameState = 'start'; // start, playing, paused, gameOver
+            
+            // 游戏对象
+            const player = {
+                x: canvas.width / 2,
+                y: canvas.height / 2,
+                width: 30,
+                height: 30,
+                health: 100,
+                speed: 3
+            };
+            
+            const enemies = [];
+            const projectiles = [];
+            
+            // 输入控制
+            const keys = {};
+            
+            // 事件监听
+            window.addEventListener('keydown', (e) => {
+                keys[e.key] = true;
+            });
+            
+            window.addEventListener('keyup', (e) => {
+                keys[e.key] = false;
+            });
+            
+            // 游戏初始化
+            function init() {
+                // 隐藏加载屏幕
+                document.getElementById('loadingScreen').style.display = 'none';
+                
+                // 开始游戏循环
+                requestAnimationFrame(gameLoop);
+            }
+            
+            // 更新游戏状态
+            function update() {
+                // 移动玩家
+                if (keys['w']) player.y -= player.speed;
+                if (keys['s']) player.y += player.speed;
+                if (keys['a']) player.x -= player.speed;
+                if (keys['d']) player.x += player.speed;
+                
+                // 边界检查
+                player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+                player.y = Math.max(0, Math.min(canvas.height - player.height, player.y));
+                
+                // 简单的敌人生成
+                if (Math.random() < 0.02) {
+                    enemies.push({
+                        x: Math.random() < 0.5 ? 0 : canvas.width,
+                        y: Math.random() * canvas.height,
+                        width: 20,
+                        height: 20,
+                        health: 30,
+                        speed: 1
+                    });
+                }
+                
+                // 更新敌人
+                for (let i = enemies.length - 1; i >= 0; i--) {
+                    const enemy = enemies[i];
+                    // 简单的追逐行为
+                    const dx = player.x - enemy.x;
+                    const dy = player.y - enemy.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance > 0) {
+                        enemy.x += (dx / distance) * enemy.speed;
+                        enemy.y += (dy / distance) * enemy.speed;
+                    }
+                }
+            }
+            
+            // 绘制游戏
+            function render() {
+                // 清空画布
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // 绘制玩家
+                ctx.fillStyle = '#4caf50';
+                ctx.fillRect(player.x, player.y, player.width, player.height);
+                
+                // 绘制敌人
+                for (const enemy of enemies) {
+                    ctx.fillStyle = '#f44336';
+                    ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                }
+                
+                // 绘制UI
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '16px Arial';
+                ctx.fillText(`生命值: ${player.health}`, 10, 20);
+                ctx.fillText(`敌人数量: ${enemies.length}`, 10, 40);
+                
+                // 绘制状态文本
+                if (gameState === 'start') {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    ctx.fillStyle = '#ff9800';
+                    ctx.font = '36px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('土豆兄弟', canvas.width / 2, canvas.height / 2 - 50);
+                    
+                    ctx.font = '24px Arial';
+                    ctx.fillText('按空格键开始游戏', canvas.width / 2, canvas.height / 2 + 50);
+                }
+            }
+            
+            // 游戏主循环
+            function gameLoop(timestamp) {
+                update();
+                render();
+                requestAnimationFrame(gameLoop);
+            }
+            
+            // 启动游戏
+            init();
+            
+            // 监听空格键开始游戏
+            window.addEventListener('keydown', (e) => {
+                if (e.key === ' ' && gameState === 'start') {
+                    gameState = 'playing';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

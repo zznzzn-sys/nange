@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园物语 - 青春回忆录</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 游戏主界面 -->
+    <div id="game-container">
+        <!-- 背景图片 -->
+        <div id="background" class="background"></div>
+        
+        <!-- 角色立绘 -->
+        <div id="character-container" class="character-container">
+            <!-- 角色立绘将通过JavaScript动态添加 -->
+        </div>
+        
+        <!-- 角色立绘资源（预加载） -->
+        <div style="display: none;">
+            <img id="sakura-img" src="微信图片_20251010142130_820_149.jpg" alt="樱井雪">
+            <img id="yuki-img" src="微信图片_20251010142131_821_149.jpg" alt="雪村凛">
+            <img id="akari-img" src="微信图片_20251010142132_822_149.jpg" alt="明里光">
+            <img id="hana-img" src="微信图片_20251010142133_823_149.jpg" alt="花音奏">
+            <img id="kaito-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMDBGRjAwIi8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNjAgMTUwTDE0MCAxNTBMMTIwIDI1MEg4MFoiIGZpbGw9IiMwMEZGMDAiLz4KPHN2Zz4K" alt="海斗翔">
+            <img id="rin-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRkYwMEZGIi8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNzAgMTUwTDEzMCAxNTBMMTAwIDI1MEgxMDBaIiBmaWxsPSIjRkYwMEZGIi8+Cjxzdmc+Cg==" alt="凛千夏">
+            <img id="haruka-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMDAwMEZGIi8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSIzMCIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNzUgMTUwTDEyNSAxNTBMMTA1IDI1MEg5NVoiIGZpbGw9IiMwMDBGRkYiLz4KPHN2Zz4K" alt="遥优月">
+        </div>
+        
+        <!-- 对话框 -->
+        <div id="dialogue-box" class="dialogue-box">
+            <div class="dialogue-header">
+                <span id="speaker-name" class="speaker-name"></span>
+                <div class="dialogue-controls">
+                    <button id="auto-btn" class="control-btn">自动</button>
+                    <button id="skip-btn" class="control-btn">跳过</button>
+                    <button id="log-btn" class="control-btn">日志</button>
+                    <button id="menu-btn" class="control-btn">菜单</button>
+                </div>
+            </div>
+            <div id="dialogue-text" class="dialogue-text"></div>
+            <div class="dialogue-footer">
+                <button id="next-btn" class="next-btn">▶ 继续</button>
+            </div>
+        </div>
+        
+        <!-- 选择分支 -->
+        <div id="choice-container" class="choice-container hidden">
+            <div class="choice-box">
+                <h3>请选择...</h3>
+                <div id="choices" class="choices"></div>
+            </div>
+        </div>
+        
+        <!-- 游戏菜单 -->
+        <div id="game-menu" class="game-menu hidden">
+            <div class="menu-content">
+                <h2>游戏菜单</h2>
+                <div class="menu-options">
+                    <button id="continue-btn" class="menu-btn">继续游戏</button>
+                    <button id="save-btn" class="menu-btn">保存游戏</button>
+                    <button id="load-btn" class="menu-btn">读取存档</button>
+                    <button id="settings-btn" class="menu-btn">设置</button>
+                    <button id="gallery-btn" class="menu-btn">画廊</button>
+                    <button id="title-btn" class="menu-btn">返回标题</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 存档界面 -->
+        <div id="save-load-menu" class="save-load-menu hidden">
+            <div class="save-load-content">
+                <h2 id="save-load-title">存档/读档</h2>
+                <div class="save-slots">
+                    <div class="save-slot" data-slot="1">
+                        <div class="slot-preview"></div>
+                        <div class="slot-info">
+                            <span class="slot-time">空存档</span>
+                            <span class="slot-scene"></span>
+                        </div>
+                    </div>
+                    <!-- 重复7个存档槽位 -->
+                </div>
+                <div class="save-load-controls">
+                    <button id="save-load-confirm" class="menu-btn">确认</button>
+                    <button id="save-load-cancel" class="menu-btn">取消</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 设置界面 -->
+        <div id="settings-menu" class="settings-menu hidden">
+            <div class="settings-content">
+                <h2>游戏设置</h2>
+                <div class="setting-group">
+                    <label>文本速度</label>
+                    <input type="range" id="text-speed" min="1" max="10" value="5">
+                </div>
+                <div class="setting-group">
+                    <label>背景音乐音量</label>
+                    <input type="range" id="bgm-volume" min="0" max="100" value="50">
+                </div>
+                <div class="setting-group">
+                    <label>音效音量</label>
+                    <input type="range" id="sfx-volume" min="0" max="100" value="50">
+                </div>
+                <div class="setting-group">
+                    <label>自动播放速度</label>
+                    <input type="range" id="auto-speed" min="1" max="10" value="3">
+                </div>
+                <div class="settings-controls">
+                    <button id="settings-confirm" class="menu-btn">确认</button>
+                    <button id="settings-cancel" class="menu-btn">取消</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 画廊界面 -->
+        <div id="gallery-menu" class="gallery-menu hidden">
+            <div class="gallery-content">
+                <h2>画廊</h2>
+                <div class="gallery-tabs">
+                    <button class="gallery-tab active" data-tab="cg">CG鉴赏</button>
+                    <button class="gallery-tab" data-tab="characters">角色介绍</button>
+                    <button class="gallery-tab" data-tab="scenes">场景回顾</button>
+                </div>
+                <div class="gallery-view">
+                    <div id="cg-gallery" class="gallery-section active"></div>
+                    <div id="characters-gallery" class="gallery-section"></div>
+                    <div id="scenes-gallery" class="gallery-section"></div>
+                </div>
+                <div class="gallery-controls">
+                    <button id="gallery-close" class="menu-btn">关闭</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 结局界面 -->
+        <div id="ending-screen" class="screen">
+            <div class="ending-container">
+                <h2 id="ending-title">结局</h2>
+                <div id="ending-content" class="ending-content">
+                    <p id="ending-text"></p>
+                </div>
+                <div class="ending-buttons">
+                    <button class="menu-button" onclick="game.showTitleScreen()">返回标题</button>
+                    <button class="menu-button" onclick="game.showGallery()">查看画廊</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 标题界面 -->
+        <div id="title-screen" class="title-screen">
+            <div class="title-content">
+                <h1 class="game-title">校园物语</h1>
+                <p class="game-subtitle">青春回忆录</p>
+                <div class="title-menu">
+                    <button id="start-game" class="title-btn">开始游戏</button>
+                    <button id="load-game" class="title-btn">继续游戏</button>
+                    <button id="title-gallery" class="title-btn">画廊</button>
+                    <button id="title-settings" class="title-btn">设置</button>
+                    <button id="title-exit" class="title-btn">退出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="bgm" loop></audio>
+    <audio id="sfx"></audio>
+    
+    <script src="script.js"></script>
+</body>
+</html>

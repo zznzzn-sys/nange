@@ -1,0 +1,653 @@
+/* 基础样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* 恐怖背景效果 */
+.terror-bg {
+  background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.terror-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* 主菜单样式 */
+.main-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  border: 2px solid #8b0000;
+  box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+}
+
+.flicker {
+  animation: flicker 3s infinite alternate;
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.7;
+  }
+}
+
+.game-title {
+  font-size: 4rem;
+  color: #8b0000;
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+.game-description {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* 菜单按钮 */
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.menu-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background: linear-gradient(45deg, #8b0000, #dc143c);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.menu-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+  background: linear-gradient(45deg, #dc143c, #ff0000);
+}
+
+.terror-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.terror-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.terror-button:hover::before {
+  left: 100%;
+}
+
+/* 游戏信息 */
+.game-info {
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.game-info h3 {
+  color: #8b0000;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #8b0000;
+  padding-bottom: 0.5rem;
+}
+
+.game-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.game-info li {
+  padding: 0.5rem 0;
+  color: #ccc;
+  font-size: 1rem;
+}
+
+/* 游戏场景样式 */
+.game-scene {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 2px solid #8b0000;
+}
+
+.back-button {
+  padding: 0.5rem 1rem;
+  background: #8b0000;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.back-button:hover {
+  background: #dc143c;
+}
+
+.scene-title {
+  color: #8b0000;
+  font-size: 1.5rem;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+.game-content {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 80px);
+}
+
+.game-area {
+  flex: 3;
+  position: relative;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(26, 26, 46, 0.8) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(15, 52, 96, 0.6) 0%, transparent 50%);
+}
+
+.interactive-objects {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  width: 80%;
+  height: 80%;
+}
+
+.object {
+  background: rgba(139, 0, 0, 0.3);
+  border: 2px solid #8b0000;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
+.object:hover {
+  background: rgba(220, 20, 60, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+.object.classroom {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.object.locker {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.object.notice {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.object.stairs {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+/* 游戏UI面板 */
+.game-ui {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.9);
+  border-left: 2px solid #8b0000;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inventory-panel, .clues-panel {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid #8b0000;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.inventory-panel h3, .clues-panel h3 {
+  color: #8b0000;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #8b0000;
+  padding-bottom: 0.5rem;
+}
+
+.inventory-items, .clues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.inventory-item, .clue-item {
+  background: rgba(139, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 4px;
+  border-left: 3px solid #8b0000;
+  font-size: 0.9rem;
+}
+
+/* 游戏头部布局 */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 2px solid #8b0000;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* 保存按钮 */
+.save-button {
+  padding: 0.5rem 1rem;
+  background: #006400;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.save-button:hover {
+  background: #008000;
+}
+
+.save-button:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+/* 静音按钮 */
+.mute-button {
+  background: none;
+  border: none;
+  color: #8b0000;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.mute-button:hover {
+  background: rgba(139, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+/* 场景导航 */
+.scene-nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  padding: 0.4rem 0.8rem;
+  background: rgba(139, 0, 0, 0.3);
+  border: 1px solid #8b0000;
+  border-radius: 4px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: rgba(220, 20, 60, 0.5);
+  color: white;
+}
+
+.nav-button:disabled {
+  background: rgba(139, 0, 0, 0.1);
+  border-color: #666;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* 场景描述 */
+.scene-description {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  margin: 1rem auto;
+  max-width: 600px;
+  border-radius: 8px;
+  border-left: 3px solid #8b0000;
+}
+
+.scene-description p {
+  font-style: italic;
+  color: #ccc;
+  font-size: 1.1rem;
+}
+
+/* 对象提示 */
+.object-tooltip {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.object:hover .object-tooltip {
+  opacity: 1;
+}
+
+/* NPC对象特殊样式 */
+.object.npc {
+  background: rgba(0, 100, 0, 0.3);
+  border-color: #006400;
+}
+
+.object.npc:hover {
+  background: rgba(0, 150, 0, 0.5);
+}
+
+/* 空状态消息 */
+.empty-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 1rem;
+}
+
+/* 进度面板 */
+.progress-panel {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid #8b0000;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.progress-panel h3 {
+  color: #8b0000;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #8b0000;
+  padding-bottom: 0.5rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(139, 0, 0, 0.3);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8b0000, #dc143c);
+  border-radius: 5px;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+/* 恐怖事件通知 */
+.horror-event-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  animation: horrorPulse 3s ease-in-out;
+}
+
+.horror-event-content {
+  background: rgba(139, 0, 0, 0.9);
+  border: 2px solid #ff0000;
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+}
+
+.horror-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.horror-event-content p {
+  color: white;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+@keyframes horrorPulse {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  80% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+}
+
+/* 游戏完成界面 */
+.game-completion-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease;
+}
+
+.completion-modal {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border: 3px solid #8b0000;
+  border-radius: 15px;
+  padding: 3rem;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 50px rgba(139, 0, 0, 0.7);
+  animation: slideUp 0.5s ease;
+}
+
+.completion-modal h2 {
+  color: #8b0000;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.completion-modal p {
+  color: #ccc;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.completion-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(139, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.stat span:first-child {
+  color: #ccc;
+}
+
+.stat span:last-child {
+  color: #8b0000;
+  font-weight: bold;
+}
+
+.completion-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* 错误页面 */
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.error-message {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 10px;
+  border: 2px solid #8b0000;
+}
+
+.error-message h2 {
+  color: #8b0000;
+  margin-bottom: 1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .game-content {
+    flex-direction: column;
+  }
+  
+  .game-ui {
+    border-left: none;
+    border-top: 2px solid #8b0000;
+  }
+  
+  .interactive-objects {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .game-title {
+    font-size: 2.5rem;
+  }
+  
+  .scene-description {
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .object-tooltip {
+    font-size: 0.7rem;
+    bottom: -35px;
+  }
+}

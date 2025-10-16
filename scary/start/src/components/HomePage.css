@@ -1,0 +1,141 @@
+.home-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.main-menu {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  border-radius: 15px;
+  border: 2px solid #8b0000;
+  box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.game-title {
+  font-size: 4rem;
+  margin-bottom: 40px;
+  text-shadow: 0 0 20px #ff0000, 0 0 40px #8b0000;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.input-section {
+  margin: 30px 0;
+}
+
+.name-input {
+  padding: 15px 20px;
+  font-size: 1.2rem;
+  border: 2px solid #8b0000;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 300px;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.name-input:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+}
+
+.name-input::placeholder {
+  color: #ccc;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.start-btn, .intro-btn {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.start-btn {
+  background: linear-gradient(45deg, #8b0000, #ff0000);
+  color: white;
+}
+
+.start-btn:hover:not(:disabled) {
+  background: linear-gradient(45deg, #ff0000, #8b0000);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+}
+
+.start-btn:disabled {
+  background: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.intro-btn {
+  background: transparent;
+  color: #8b0000;
+  border: 2px solid #8b0000;
+}
+
+.intro-btn:hover {
+  background: rgba(139, 0, 0, 0.2);
+  color: #ff0000;
+  border-color: #ff0000;
+}
+
+.intro-container {
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 40px;
+  border-radius: 15px;
+  border: 2px solid #8b0000;
+}
+
+.intro-content {
+  text-align: left;
+  line-height: 1.8;
+  margin: 20px 0;
+}
+
+.intro-content p {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .main-menu, .intro-container {
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .game-title {
+    font-size: 2.5rem;
+  }
+  
+  .name-input {
+    width: 250px;
+  }
+}

@@ -1,0 +1,13 @@
+@echo off
+echo 启动恐怖校园游戏...
+cd /d "%~dp0"
+if exist "node_modules" (
+    echo 依赖已安装，启动开发服务器...
+    npm run dev
+) else (
+    echo 安装依赖...
+    npm install
+    echo 依赖安装完成，启动开发服务器...
+    npm run dev
+)
+pause

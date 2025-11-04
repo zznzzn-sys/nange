@@ -16,6 +16,7 @@ export interface GameObject {
   interaction: string
   requiredItem?: string
   result: string
+  givesItem?: string
 }
 
 export interface NPC {
@@ -56,7 +57,8 @@ export const gameScenes: Scene[] = [
         type: 'container',
         description: '一个生锈的储物柜，编号为13',
         interaction: '检查储物柜',
-        result: '在储物柜里找到了一把旧钥匙'
+        result: '在储物柜里找到了一把旧钥匙',
+        givesItem: 'old_key'
       },
       {
         id: 'notice_board',
@@ -113,7 +115,8 @@ export const gameScenes: Scene[] = [
         type: 'container',
         description: '老师的讲台，上面放着粉笔和教案',
         interaction: '检查讲台',
-        result: '在教案中发现了一张奇怪的照片'
+        result: '在教案中发现了一张奇怪的照片',
+        givesItem: 'photo'
       },
       {
         id: 'student_desk',
@@ -121,7 +124,8 @@ export const gameScenes: Scene[] = [
         type: 'container',
         description: '一张普通的课桌，上面刻着名字',
         interaction: '检查课桌',
-        result: '在抽屉里发现了一本日记'
+        result: '在抽屉里发现了一本日记',
+        givesItem: 'diary'
       },
       {
         id: 'blackboard',
@@ -150,7 +154,8 @@ export const gameScenes: Scene[] = [
         type: 'clue',
         description: '存放着古老的书籍，有些书页已经发黄',
         interaction: '查阅古籍',
-        result: '在一本古籍中发现了一张神秘的地图'
+        result: '在一本古籍中发现了一张神秘的地图',
+        givesItem: 'map'
       },
       {
         id: 'study_table',
@@ -158,7 +163,8 @@ export const gameScenes: Scene[] = [
         type: 'container',
         description: '一张布满灰尘的学习桌',
         interaction: '检查学习桌',
-        result: '在抽屉里找到了一本学生的笔记'
+        result: '在抽屉里找到了一本学生的笔记',
+        givesItem: 'notes'
       },
       {
         id: 'restricted_section',
@@ -208,7 +214,8 @@ export const gameScenes: Scene[] = [
         type: 'container',
         description: '校长的办公桌，上面放着各种文件',
         interaction: '搜查办公桌',
-        result: '发现了一份关于学生失踪的机密文件'
+        result: '发现了一份关于学生失踪的机密文件',
+        givesItem: 'final_clue'
       },
       {
         id: 'safe',
@@ -217,7 +224,8 @@ export const gameScenes: Scene[] = [
         description: '一个老式保险柜，需要密码才能打开',
         interaction: '尝试打开保险柜',
         requiredItem: '保险柜密码',
-        result: '保险柜里藏着最终的真相'
+        result: '保险柜里藏着最终的真相',
+        givesItem: 'safe_code'
       },
       {
         id: 'photo_wall',
@@ -226,6 +234,14 @@ export const gameScenes: Scene[] = [
         description: '墙上挂着学校的历史照片',
         interaction: '查看照片',
         result: '发现一张照片中的人物与失踪学生很像'
+      },
+      {
+        id: 'office_door',
+        name: '办公室门',
+        type: 'door',
+        description: '通往走廊的门',
+        interaction: '离开办公室',
+        result: '回到了走廊'
       }
     ],
     npcs: [],
@@ -233,6 +249,121 @@ export const gameScenes: Scene[] = [
       '办公室的窗户被木板封死',
       '闻到浓重的消毒水味道',
       '听到奇怪的敲击声'
+    ]
+  },
+  {
+    id: 'library',
+    name: '图书馆',
+    description: '寂静的图书馆，书架上的书散发着陈旧的气息...',
+    objects: [
+      {
+        id: 'ancient_books',
+        name: '古籍区',
+        type: 'clue',
+        description: '存放着古老的书籍，有些书页已经发黄',
+        interaction: '查阅古籍',
+        result: '在一本古籍中发现了一张神秘的地图',
+        givesItem: 'map'
+      },
+      {
+        id: 'study_table',
+        name: '学习桌',
+        type: 'container',
+        description: '一张布满灰尘的学习桌',
+        interaction: '检查学习桌',
+        result: '在抽屉里找到了一本学生的笔记',
+        givesItem: 'notes'
+      },
+      {
+        id: 'restricted_section',
+        name: '禁书区',
+        type: 'door',
+        description: '被锁住的禁书区，需要特殊权限才能进入',
+        interaction: '尝试进入禁书区',
+        requiredItem: '管理员钥匙',
+        result: '禁书区里藏着学校的秘密档案'
+      },
+      {
+        id: 'library_door',
+        name: '图书馆门',
+        type: 'door',
+        description: '通往走廊的门',
+        interaction: '离开图书馆',
+        result: '回到了走廊'
+      }
+    ],
+    npcs: [
+      {
+        id: 'librarian',
+        name: '图书管理员',
+        description: '一位严肃的图书管理员，似乎知道很多秘密',
+        dialogues: [
+          {
+            id: 'lib_dialogue_1',
+            text: '这里不欢迎外人，请离开。',
+            nextDialogue: 'lib_dialogue_2',
+            givesClue: '管理员态度异常强硬'
+          },
+          {
+            id: 'lib_dialogue_2',
+            text: '除非你有校长的许可...',
+            givesItem: '校长办公室线索'
+          }
+        ],
+        clues: ['管理员似乎隐瞒着什么']
+      }
+    ],
+    clues: [
+      '图书馆的监控摄像头被故意遮挡',
+      '某些书籍被标记为"失踪"',
+      '闻到一股奇怪的香味'
+    ]
+  },
+  {
+    id: 'classroom_1f',
+    name: '101教室',
+    description: '空荡荡的教室，桌椅摆放整齐，但总觉得有人在看着你...',
+    objects: [
+      {
+        id: 'teacher_desk',
+        name: '讲台',
+        type: 'container',
+        description: '老师的讲台，上面放着粉笔和教案',
+        interaction: '检查讲台',
+        result: '在教案中发现了一张奇怪的照片',
+        givesItem: 'photo'
+      },
+      {
+        id: 'student_desk',
+        name: '学生课桌',
+        type: 'container',
+        description: '一张普通的课桌，上面刻着名字',
+        interaction: '检查课桌',
+        result: '在抽屉里发现了一本日记',
+        givesItem: 'diary'
+      },
+      {
+        id: 'blackboard',
+        name: '黑板',
+        type: 'clue',
+        description: '黑板上写着未擦干净的数学公式',
+        interaction: '查看黑板',
+        result: '公式下面似乎隐藏着其他文字'
+      },
+      {
+        id: 'classroom_door',
+        name: '教室门',
+        type: 'door',
+        description: '通往走廊的门',
+        interaction: '离开教室',
+        result: '回到了走廊'
+      }
+    ],
+    npcs: [],
+    clues: [
+      '教室的时钟停在午夜12点',
+      '窗户外面似乎有人影闪过',
+      '听到远处传来的脚步声'
     ]
   }
 ]

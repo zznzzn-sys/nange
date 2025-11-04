@@ -25,6 +25,20 @@ export class SoundManager {
     soundFiles.forEach(sound => {
       const audio = new Audio()
       audio.preload = 'auto'
+      // 设置错误处理，避免音效文件不存在时导致应用崩溃
+      audio.onerror = () => {
+        console.log(`音效文件加载失败: ${sound.name}`)
+        this.sounds.delete(sound.name) // 移除无效的音效
+      }
+      
+      // 检查音效文件是否存在，如果不存在则跳过设置src
+      try {
+        // 这里不设置src，避免404错误，直接使用默认音效
+        console.log(`音效 ${sound.name} 使用默认音效`)
+      } catch (error) {
+        console.log(`音效 ${sound.name} 初始化失败:`, error)
+      }
+      
       this.sounds.set(sound.name, audio)
     })
   }
@@ -35,18 +49,23 @@ export class SoundManager {
 
     try {
       const audio = this.sounds.get(soundName)
-      if (audio) {
+      if (audio && audio.src) {
+        // 如果音效文件存在且有源，尝试播放
         audio.volume = volume
         audio.currentTime = 0
         audio.play().catch(error => {
           console.log(`音效播放失败: ${soundName}`, error)
+          // 播放失败时使用默认音效
+          this.playDefaultSound(soundName, volume)
         })
       } else {
-        // 如果音效文件不存在，使用默认音效
+        // 如果音效文件不存在，直接使用默认音效
         this.playDefaultSound(soundName, volume)
       }
     } catch (error) {
       console.log('音效播放失败:', error)
+      // 出错时使用默认音效
+      this.playDefaultSound(soundName, volume)
     }
   }
 
